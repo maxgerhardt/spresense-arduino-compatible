@@ -1,0 +1,17 @@
+{
+  "name": "framework-arduinosonyspresense",
+  "version": "2.5.1",
+  "description": " Spresense Arduino Library source code ",
+  "keywords": [
+    "framework",
+    "arduino",
+    "sony",
+    "spresense"
+  ],
+  "homepage": "https://www.arduino.cc/reference/en",
+  "license": "LGPL-2.1-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maxgerhardt/spresense-arduino-compatible"
+  }
+}
