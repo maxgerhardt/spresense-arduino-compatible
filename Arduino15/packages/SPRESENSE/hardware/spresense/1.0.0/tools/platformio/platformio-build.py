@@ -78,11 +78,14 @@ if target_core[0] == "main":
         "libc.a", "libcmsis_nn.a", "libdrivers.a", "libfs.a", "libmm.a", "libnet.a", "libnnablart.a", "libsched.a", 
         "libsslutils.a", "libxx.a"
     ]
+    # argument for creating the SPK file later
+    env.Append(FLASH_NAME="nuttx")
 else:
     libraries = [
         "libapps.a", "libarch.a", "libarm_cortexM4lf_math.a", "libbinfmt.a", "libboard.a", "libboards.a", "libc.a", 
         "libcmsis_nn.a", "libdrivers.a", "libfs.a", "libmm.a", "libsched.a", "libxx.a"
     ]
+    env.Append(FLASH_NAME=target_core[0] + str(target_core[1]))
 
 build_type_prefix = "" if target_core[0] == "main" else "subcore-"
 build_type = build_type_prefix + "release" if not debug_enabled else "debug"
@@ -163,7 +166,7 @@ env.Append(
         ("F_CPU", "$BOARD_F_CPU"), # for compatiblity
         "ARDUINO_ARCH_SPRESENSE",
         "ARDUINO_%s" % board_id,
-        ("BOARD_NAME", '\\"%s\\"' % board_id),
+        ("ARDUINO_BOARD", '\\"%s\\"' % board_id),
         "CONFIG_WCHAR_BUILTIN",
         "CONFIG_HAVE_DOUBLE",
         "__NuttX__"
@@ -199,7 +202,6 @@ env.Append(
         "-u spresense_main"
     ],
     LIBS=computed_libs,
-#    LIBPATH=[join(CMSIS_DIR, "DSP", "Lib", "GCC")],
 )
 
 
