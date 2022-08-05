@@ -91,7 +91,7 @@ build_type = build_type_prefix + "release" if not debug_enabled else "debug"
 kernel_path = join(SDK_DIR, build_type)
 libpath = join(kernel_path, "nuttx", "libs")
 
-original_variant = board_config.get("build.arduino.variant", "spresense")
+original_variant = board_config.get("build.variant", board_config.get("build.arduino.variant", "spresense"))
 # subcores use a different variant
 variant = original_variant if target_core[0] == "main" else "spresense_sub"
 
@@ -103,8 +103,6 @@ computed_libs.extend([
 ])
 
 mcu = board_config.get("build.mcu", "")
-variant = board_config.get(
-    "build.variant", board_config.get("build.arduino.variant", "spresense"))
 
 variants_dir = (
     join("$PROJECT_DIR", board_config.get("build.variants_dir"))
