@@ -58,7 +58,6 @@ if "PIO_FRAMEWORK_ARDUINO_CORE_MAIN_CORE" in cpp_defines:
 if "PIO_FRAMEWORK_ARDUINO_CORE_SUB_CORE_1" in cpp_defines:
     target_core = ("sub", 1)
     env.Append(CPPDEFINES=[("SUBCORE", 1)])
-    libs
 if "PIO_FRAMEWORK_ARDUINO_CORE_SUB_CORE_2" in cpp_defines:
     target_core = ("sub", 2)
     env.Append(CPPDEFINES=[("SUBCORE", 2)])
