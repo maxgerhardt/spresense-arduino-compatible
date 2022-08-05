@@ -54,23 +54,6 @@ if "windows" not in get_systype().lower() and not (
 
 upload_protocol = env.subst("$UPLOAD_PROTOCOL")
 
-def add_upload_protocol_defines(board, upload_protocol):
-    if upload_protocol == "serial":
-        env.Append(
-            CPPDEFINES=[("CONFIG_MAPLE_MINI_NO_DISABLE_DEBUG", 1)])
-    elif upload_protocol == "dfu":
-        env.Append(CPPDEFINES=["SERIAL_USB"])
-    else:
-        env.Append(
-            CPPDEFINES=[
-                ("CONFIG_MAPLE_MINI_NO_DISABLE_DEBUG", 1),
-                "SERIAL_USB"
-            ])
-
-    is_generic = board.startswith("generic") or board == "hytiny_stm32f103t"
-    if upload_protocol in ("stlink", "dfu", "jlink") and is_generic:
-        env.Append(CPPDEFINES=["GENERIC_BOOTLOADER"])
-
 def get_arduino_board_id(board_config, mcu):
     # User-specified value
     if board_config.get("build.arduino.board", ""):
@@ -172,12 +155,6 @@ if not board_config.get("build.ldscript", ""):
 #
 
 cpp_defines = env.Flatten(env.get("CPPDEFINES", []))
-
-process_standard_library_configuration(cpp_defines)
-add_upload_protocol_defines(board_name, upload_protocol)
-# defining HAL_UART_MODULE_ENABLED causes build failure 'uart_debug_write' was not declared in this scope
-#process_usart_configuration(cpp_defines)
-process_usb_configuration(cpp_defines)
 
 # copy CCFLAGS to ASFLAGS (-x assembler-with-cpp mode)
 env.Append(ASFLAGS=env.get("CCFLAGS", [])[:])
