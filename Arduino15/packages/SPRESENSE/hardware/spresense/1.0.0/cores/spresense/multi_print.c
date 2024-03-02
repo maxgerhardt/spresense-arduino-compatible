@@ -25,7 +25,7 @@
 #include <cxd56_sph.h>
 #include <nuttx/irq.h>
 #include <nuttx/arch.h>
-#include <common/arm_arch.h>
+#include <common/arm_internal.h>
 #include <armv7-m/nvic.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
@@ -117,7 +117,7 @@ int sync_printf(const char *fmt, ...)
   lib_memoutstream(&memoutstream, buf, sizeof(buf));
 
   va_start(ap, fmt);
-  n = lib_vsprintf((FAR struct lib_outstream_s *)&memoutstream.public, fmt, ap);
+  n = lib_vsprintf((FAR struct lib_outstream_s *)&memoutstream.common, fmt, ap);
   va_end(ap);
 
   uart_syncwrite(buf, n);

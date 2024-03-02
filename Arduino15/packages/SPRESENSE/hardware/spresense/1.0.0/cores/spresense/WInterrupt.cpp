@@ -25,7 +25,7 @@
 #include <arch/chip/pin.h>
 #include <nuttx/irq.h>
 #include <nuttx/arch.h>
-#include <common/arm_arch.h>
+#include <common/arm_internal.h>
 #include <chip/hardware/cxd5602_memorymap.h>
 #include <chip/hardware/cxd5602_topreg.h>
 
@@ -54,10 +54,9 @@ static bool irq_enabled(int irq)
     return enabled;
 }
 
-static void attach_interrupt(uint8_t pin, void (*isr)(void), int mode)
+static void attach_interrupt(uint8_t pin, void (*isr)(void), int mode, bool filter)
 {
     int  _mode;
-    bool filter = true; // always enable noise filter
 
     switch (mode) {
     case LOW:
@@ -136,12 +135,12 @@ void irq_restore(uint16_t flags)
 }
 } // extern "C"
 
-void attachInterrupt(uint8_t interrupt, void (*isr)(void), int mode)
+void attachInterrupt(uint8_t interrupt, void (*isr)(void), int mode, bool filter)
 {
     uint8_t _pin = pin_convert(interrupt);
     if (_pin == PIN_NOT_ASSIGNED)
         return;
-    attach_interrupt(_pin, isr, mode);
+    attach_interrupt(_pin, isr, mode, filter);
 }
 
 void detachInterrupt(uint8_t interrupt)
