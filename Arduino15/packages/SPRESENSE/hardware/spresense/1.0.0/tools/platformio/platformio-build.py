@@ -75,7 +75,7 @@ if target_core[0] == "main":
     libraries = [
         "libapps.a", "libarch.a", "libarm_cortexM4lf_math.a", "libaudio.a", "libbinfmt.a", "libboard.a", "libboards.a", 
         "libc.a", "libcmsis_nn.a", "libdrivers.a", "libfs.a", "libmm.a", "libnet.a", "libnnablart.a", "libsched.a", 
-        "libsslutils.a", "libxx.a"
+        "libsslutils.a", "libxx.a", "libnrf52.a", "libuecc.a"
     ]
     # argument for creating the SPK file later
     env.Append(FLASH_NAME="nuttx")
@@ -169,9 +169,8 @@ env.Append(
         "__NuttX__"
     ],
     CPPPATH=[
-        join(FRAMEWORK_DIR, "cores", "spresense"),
-        join(FRAMEWORK_DIR, "cores", "spresense", "avr"),
         join(kernel_path, "nuttx", "include", "libcxx"),
+        join(kernel_path, "nuttx", "include", "newlib"),
         join(kernel_path, "nuttx", "include"),
         join(kernel_path, "nuttx", "arch"),
         join(kernel_path, "nuttx", "arch", "chip"),
@@ -181,6 +180,8 @@ env.Append(
         join(kernel_path, "sdk", "system", "include"),
         join(kernel_path, "sdk", "externals", "include"),
         join(kernel_path, "sdk", "externals", "include", "cmsis"),
+        join(FRAMEWORK_DIR, "cores", "spresense"),
+        join(FRAMEWORK_DIR, "cores", "spresense", "avr"),
     ],
     LINKFLAGS=[
         "-ggdb",
